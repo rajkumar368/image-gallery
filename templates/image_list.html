@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>TutorBin</title>
+  <!-- CSS only -->
+  <link rel='stylesheet' href="{% static 'css/image_list.css' %}">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Parisienne&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+<!--title-->
+	<div class="header">
+    	<h1>TutorBin</h1>
+        <p>TutorBin Filter Gallery With Responsive, Pagination.</p>
+    </div>
+<!--title-->
+
+<div class="filters filter-button-group">
+	<ul>
+        <li class="active"><a href="{% url 'all_image' %}" data-filter="*">All</a></li>
+        {% for tag in tags %}
+        <li><a href="{% url 'list_image' tag_name=tag.name %}" data-filter="bike">{{tag.name}}</a></li>
+        {% endfor %}
+	</ul>
+</div>
+	<div id="container" class="isotope">
+    {% for img in img_obj %}
+		<div class="grid-item" data-filter="bike">
+        <a class="popupimg" href="{% url 'image_details' id=img.id %}">
+        <img src="{{ img.image.url }}">
+        </a>
+        <!-- <div class="overlay"></div> -->
+        </div>
+    {% endfor %}
+    </div>
+    
+    <div class="isotope-pager" style="padding-top: 15px; text-align:center;">
+        </div>
+    
+        {% if img_obj.has_other_pages %}
+        <ul class="pagination">
+        {% if img_obj.has_previous %}
+          <li><a href="?page={{ img_obj.previous_page_number }}">&laquo;</a></li>
+        {% else %}
+          <li class="disabled"><span>&laquo;</span></li>
+        {% endif %}
+        {% for i in img_obj.paginator.page_range %}
+          {% if img_obj.number == i %}
+            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+          {% else %}
+            <li><a href="?page={{ i }}">{{ i }}</a></li>
+          {% endif %}
+        {% endfor %}
+        {% if img_obj.has_next %}
+          <li><a href="?page={{ img_obj.next_page_number }}">&raquo;</a></li>
+        {% else %}
+          <li class="disabled"><span>&raquo;</span></li>
+        {% endif %}
+      </ul>
+      {% endif %}
+
+
+ <!-- footer -->
+ <div class="footer">
+  <p>&copy;<script>document.write(new Date().getFullYear());</script> By <a href="https://www.instagram.com/mu__had/" target="_blank">Muhad Kv</a> </p>
+
+</div>
+
+
+<!-- //footer -->
+
+
+<!-- partial -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.2/isotope.pkgd.min.js'></script><script  src="./script.js"></script>
+
+</body>
+</html>

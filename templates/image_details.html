@@ -1,0 +1,58 @@
+<html>
+<head>
+<title>TutorBin</title>
+<script src="http://code.jquery.com/jquery-2.1.1.js"></script>
+<script>
+function rotateImage(degree) {
+    var rt_img = "{{ img.image.url }}"
+    var rt_id = "{{ img.id }}"
+    $.ajax({
+            type: 'GET',
+            url: "{% url 'rotate_image' %}",
+            data: {"degree": degree,"rt_img":rt_img,"rt_id":rt_id},
+            success: function (response) {
+                console.log(response)
+                // if not valid user, alert the user
+                if(!response["valid"]){
+                    // alert("You cannot create a friend with same nick name");
+                    // var nickName = $("#id_nick_name");
+                    // nickName.val("")
+                    // nickName.focus()
+                }
+            },
+            error: function (response) {
+                console.log(response)
+            }
+        })
+
+
+	$('#demo-image').animate({  transform: degree }, {
+    step: function(now,fx) {
+        $(this).css({
+            '-webkit-transform':'rotate('+now+'deg)', 
+            '-moz-transform':'rotate('+now+'deg)',
+            'transform':'rotate('+now+'deg)'
+        });
+    }
+    });
+    }
+</script>
+<style>
+#demo-image{padding:25px 10px;margin-bottom: 100px;}
+.btnRotate {padding: 5px 10px;background-color: #09F;border: 0;color: #FFF;cursor: pointer;}
+</style>
+</head>
+<body>
+<div><img src="{{ img.image.url }}" id="demo-image" /></div>
+
+<div>
+<label>Rotate Image:</label>
+<input type="button" class="btnRotate" value="90" onClick="rotateImage(this.value);" />
+<input type="button" class="btnRotate" value="-90" onClick="rotateImage(this.value);" />
+<input type="button" class="btnRotate" value="180" onClick="rotateImage(this.value);" />
+<input type="button" class="btnRotate" value="360" onClick="rotateImage(this.value);" />
+</div>
+
+</body>
+</html>
+
