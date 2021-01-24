@@ -12,13 +12,6 @@ function rotateImage(degree) {
             data: {"degree": degree,"rt_img":rt_img,"rt_id":rt_id},
             success: function (response) {
                 console.log(response)
-                // if not valid user, alert the user
-                if(!response["valid"]){
-                    // alert("You cannot create a friend with same nick name");
-                    // var nickName = $("#id_nick_name");
-                    // nickName.val("")
-                    // nickName.focus()
-                }
             },
             error: function (response) {
                 console.log(response)
