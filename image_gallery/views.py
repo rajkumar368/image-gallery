@@ -7,7 +7,6 @@ from PIL import Image
 def tags_creation(request):
     tag_name = request.POST.get("tag")
     tag_obj = Tags.objects.get_or_create(name=tag_name)[0]
-    tags = Tags.objects.all()
     return redirect("/image_upload/")
 
     
